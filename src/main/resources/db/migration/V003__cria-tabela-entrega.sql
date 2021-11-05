@@ -4,7 +4,7 @@ CREATE TABLE entrega (
 	taxa DECIMAL(10,2) NOT NULL,
 	status VARCHAR(20) NOT NULL,
 	data_pedido DATETIME NOT NULL,
-	data_finalizacao DATETIME NOT NULL,
+	data_finalizacao DATETIME,
 	destinatario_nome VARCHAR(60) NOT NULL,
 	destinatario_logradouro VARCHAR(255) NOT NULL,
 	destinatario_numero VARCHAR(30) NOT NULL,
