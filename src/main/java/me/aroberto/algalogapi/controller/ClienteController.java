@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,27 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import me.aroberto.algalogapi.domain.exception.NegocioException;
 import me.aroberto.algalogapi.domain.model.Cliente;
 import me.aroberto.algalogapi.domain.repository.ClienteRepository;
 import me.aroberto.algalogapi.domain.service.ClienteService;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
 
-	private final ClienteRepository clienteRepository;
-	private final ClienteService clienteService;
-
-	@Autowired
-	public ClienteController(ClienteRepository clienteRepository, ClienteService clienteService) {
-		this.clienteRepository = clienteRepository;
-		this.clienteService = clienteService;
-	}
-
-	public ClienteController() {
-		this(null, null);
-	}
+	private ClienteRepository clienteRepository;
+	private ClienteService clienteService;
 
 	@GetMapping
 	public List<Cliente> listar() {
@@ -65,7 +56,7 @@ public class ClienteController {
 //		return clienteRepository.save(cliente);
 		boolean emailEmUso = clienteRepository.findByEmail(cliente.getEmail()).stream()
 				.anyMatch(clienteExistente -> !clienteExistente.equals(cliente));
-		if(emailEmUso) {
+		if (emailEmUso) {
 			throw new NegocioException("Já existe um cliente cadastrado com este e-mail.");
 		}
 		return clienteService.salvar(cliente);
